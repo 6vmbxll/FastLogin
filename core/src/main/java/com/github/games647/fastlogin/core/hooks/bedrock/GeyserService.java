@@ -28,32 +28,23 @@ package com.github.games647.fastlogin.core.hooks.bedrock;
 import com.github.games647.fastlogin.core.shared.FastLoginCore;
 import com.github.games647.fastlogin.core.shared.LoginSource;
 import org.geysermc.geyser.GeyserImpl;
-import org.geysermc.geyser.api.network.AuthType;
 import org.geysermc.geyser.session.GeyserSession;
-
 import java.util.UUID;
 
 public class GeyserService extends BedrockService<GeyserSession> {
 
     private final GeyserImpl geyser;
     private final FastLoginCore<?, ?, ?> core;
-    private final AuthType authType;
 
     public GeyserService(GeyserImpl geyser, FastLoginCore<?, ?, ?> core) {
         super(core);
         this.geyser = geyser;
         this.core = core;
-        this.authType = GeyserImpl.getInstance().getConfig().getRemote().authType();
     }
 
     @Override
     public boolean performChecks(String username, LoginSource source) {
-        // AuthType.FLOODGATE will be handled by FloodgateService
-        if (authType == AuthType.ONLINE) {
-            // authenticate everyone, as if they were Java players, since they have signed
-            // in through Mojang
-            return false;
-        }
+        // Floodgate checks (identificación de auth-type) se deben manejar aparte o confiar en config propia.
         if ("true".equals(allowConflict)) {
             core.getPlugin().getLog().info("Skipping name conflict checking for player {}", username);
         } else {
