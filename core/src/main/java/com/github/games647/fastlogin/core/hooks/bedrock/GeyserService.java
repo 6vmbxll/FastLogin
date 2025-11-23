@@ -44,7 +44,7 @@ public class GeyserService extends BedrockService<GeyserSession> {
 
     @Override
     public boolean performChecks(String username, LoginSource source) {
-        // Floodgate checks (identificación de auth-type) se deben manejar aparte o confiar en config propia.
+        // Floodgate checks (auth-type identification) must be handled separately or rely on custom config.
         if ("true".equals(allowConflict)) {
             core.getPlugin().getLog().info("Skipping name conflict checking for player {}", username);
         } else {
